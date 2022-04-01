@@ -9,7 +9,7 @@ ENV DEBUG=*
 
 COPY --chown=node:node package.json yarn.lock ./
 
-RUN yarn install --prod --frozen-lockfile
+RUN yarn install --prod --frozen-lockfile --network-timeout 100000
 
 COPY --chown=node:node ./dist/ ./dist/
 

@@ -14,7 +14,7 @@
 FROM node:14.18.2-buster-slim@sha256:20bedf0c09de887379e59a41c04284974f5fb529cf0e13aab613473ce298da3d as builder
 WORKDIR /usr/src
 COPY back/yarn.lock back/package.json ./
-RUN yarn install
+RUN yarn install --network-timeout 100000
 COPY back .
 #COPY --from=proto-builder /usr/src/generated src/Messages/generated
 ENV NODE_ENV=production
@@ -25,7 +25,7 @@ FROM node:14.18.2-buster-slim@sha256:20bedf0c09de887379e59a41c04284974f5fb529cf0
 WORKDIR /usr/src
 COPY back/yarn.lock back/package.json ./
 ENV NODE_ENV=production
-RUN yarn install --production
+RUN yarn install --production --network-timeout 100000
 COPY --from=builder /usr/src/dist /usr/src/dist
 
 USER node
